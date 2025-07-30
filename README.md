@@ -1,116 +1,81 @@
 
-# Patient Management System  
+# Graduation Project: Patient Web Interface Deployment with CI/CD
 
-A simple **Flask-based web application** to manage patient records. The system allows users to **sign up** with their details and **search for patient records** using a National ID. Data is stored in a **SQLite database**.
+This project demonstrates the full deployment pipeline for a Flask-based patient web interface, from development to production using:
 
----
-
-## Features  
-
-1. **Patient Signup**  
-   - Users can register their details including name, email, National ID, and birthdate.  
-   - Password validation ensures security, and data is checked for duplicates before being stored.  
-
-2. **Patient Search**  
-   - Search for patient records using their National ID.  
-   - Displays user information including username, email, and National ID.  
-
-3. **SQLite Database Integration**  
-   - Patient data is stored in a lightweight SQLite database.  
-
-4. **Form Validation**  
-   - Form inputs are validated using `WTForms`, ensuring data integrity.  
+- **GitHub Actions**
+- **Docker**
+- **Terraform (AWS EC2 + VPC)**
+- **Kubernetes (Minikube)**
 
 ---
 
-## Technologies Used  
+## 📦 Project Structure
 
-- **Python**  
-- **Flask**  
-- **Flask-WTF**  
-- **SQLite**  
-- **HTML**  
-
----
-
-## Getting Started  
-
-### Prerequisites  
-
-- Python 3.8 or higher  
-- `pip` (Python package manager)  
-
-### Installation  
-
-1. Clone the repository:  
-   ```bash
-   git clone https://github.com/yourusername/patient-management-system.git
-   cd patient-management-system
-   ```  
-
-2. Install required dependencies:  
-   ```bash
-   pip install -r requirements.txt
-   ```  
-
-3. Run the application:  
-   ```bash
-   python app.py
-   ```  
-
-4. Access the application in your browser at:  
-   ```plaintext
-   http://127.0.0.1:8000
-   ```  
-
----
-
-## Project Structure  
-
-```plaintext
-patient-management-system/
-│
-├── app.py               # Main application file
-├── signup.py            # FlaskForm classes for Signup and Search
-├── templates/           # HTML templates for rendering
-│   ├── main.html        # Main page
-│   ├── signup.html      # Signup page
-│   ├── search.html      # Search page
-│   ├── out.html         # Output/results page
-├── static/              # Static files (CSS, JS, images)
-├── patient.db           # SQLite database file
-├── requirements.txt     # Project dependencies
-└── README.md            # Project documentation
+```
+final_pro/
+├── k8s/                  # Kubernetes manifests
+├── Patient-Web-interface/
+│   └── project/          # Flask app source code
+├── deploy.yml            # GitHub Actions workflow
+├── main.tf               # Terraform file to provision infrastructure
+├── patient-app.tar       # Docker image (not tracked)
+├── screenshots/          # Project screenshots
+└── README.md             # This file
 ```
 
 ---
 
-## How It Works  
+## 🚀 Pipeline Overview
 
-1. **Main Page**  
-   Navigate to the homepage.  
+1. **GitHub Actions**:
+   - On every push to main branch, a Docker image is built and pushed to DockerHub.
 
-2. **Signup**  
-   Fill out the signup form with required details. On successful submission, the data is added to the database.  
+2. **Terraform**:
+   - Provisions an AWS EC2 instance, VPC, and subnet.
+   - SSH access is used to install Docker, Minikube, kubectl.
 
-3. **Search**  
-   Enter a valid National ID to search for a patient. If found, the user details are displayed.  
-
-4. **Validation**  
-   - All fields are required.  
-   - Password and confirm password must match.  
-   - Duplicate National IDs are rejected.  
+3. **Minikube + Kubernetes**:
+   - Docker image is loaded into Minikube.
+   - App is deployed using `Deployment` and `Service` YAML files.
+   - Access is done via `kubectl port-forward`.
 
 ---
 
-## Future Improvements  
+## 🧪 Screenshots
 
-- Add user authentication for secure login/logout.  
-- Implement advanced search options.  
-- Integrate a RESTful API for external access.  
+### ✅ GitHub Actions CI/CD
+
+![CI/CD](screenshots/github-actions-success.png)
+
+### ✅ Docker Image Build
+
+![Docker Build](screenshots/docker-build.png)
+
+### ✅ Terraform Provisioning EC2
+
+![Terraform](screenshots/terraform-provision.png)
+
+### ✅ Kubernetes Deployment
+
+![K8s Deploy](screenshots/k8s-deploy.png)
+
+### ✅ Flask App Running
+
+![Flask App](screenshots/flask-app.png)
 
 ---
 
-## License  
+## 💡 Notes
 
-This project is licensed under the MIT License.  
+- Make sure to run `eval $(minikube docker-env)` **before** building or loading Docker images.
+- Use `kubectl port-forward` to access the app on localhost.
+- You can use Git Large File Storage (LFS) if needed to handle large files like `patient-app.tar`.
+
+---
+
+## 🔗 Author
+
+- GitHub: [Mousv99](https://github.com/Mousv99)
+
+
