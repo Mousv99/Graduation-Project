@@ -1,0 +1,14 @@
+# Ignore Terraform state files
+*.tfstate
+*.tfstate.*
+
+# Ignore .terraform folder
+.terraform/
+
+# Ignore sensitive files
+*.pem
+*.key
+*.env
+
+# Ignore VSCode settings
+.vscode/
